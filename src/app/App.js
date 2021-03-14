@@ -3,7 +3,7 @@ import logo from './logo.svg'
 import './App.css'
 import HttpService from "../service/http-service"
 import Product from "../product/product"
-import Wishlist from "../wishlist/wishlist";
+import Wishlist from "../wishlist/wishlist"
 
 const http = new HttpService()
 
@@ -16,21 +16,22 @@ class App extends Component {
 
     this.loadData = this.loadData.bind(this)
     this.productList = this.productList.bind(this)
-    this.loadData();
+
+    this.loadData()
   }
 
   loadData = () => {
-    const self = this
-    http.getProducts().then(productsData => {
-      self.setState({products: productsData})
+    let self = this
+    http.getProducts().then(data => {
+      self.setState({products: data})
     }, err => {
     })
   }
 
   productList = () => {
-    const list = this.state.products.map((product) =>
+    let list = this.state.products.map((product) =>
        <div className="col-sm-4" key={product._id}>
-         <Product title={product.title} price={product.price} imgUrl={product.imgUrl}/>
+         <Product product={product}/>
        </div>
     )
     return (list);

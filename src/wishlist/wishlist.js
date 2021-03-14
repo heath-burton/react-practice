@@ -1,31 +1,31 @@
 import React, {Component} from 'react'
 import './wishlist.css'
-import ProductCondensed from "../product-condensed/product-condensed";
+import ProductCondensed from "../product-condensed/product-condensed"
+import NotificationService, {NOTIF_WISHLIST_CHANGED} from "../service/notification-service"
 
-class Wishlist extends Component {
+let ns = new NotificationService()
+
+class WishList extends Component {
 
     constructor(props) {
         super(props)
 
-        this.state = {wishList:[
-                {
-                    title: "Something",
-                    price: 69,
-                    _id: "@#213231"
-                },
-                {
-                    title: "Something Else",
-                    price: 420,
-                    _id: "@#21qwe3231"
-                },
-                {
-                    title: "Something else again",
-                    price: 69420,
-                    _id: "@#weq213231"
-                }
-            ]}
+        this.state = {wishList:[]}
 
         this.createWishList = this.createWishList.bind(this)
+        this.onWishlistChanged = this.onWishlistChanged.bind(this)
+    }
+
+    componentDidMount() {
+        ns.addObserver(NOTIF_WISHLIST_CHANGED, this, this.onWishlistChanged)
+    }
+
+    componentWillUnmount() {
+          ns.removeObserver(this, NOTIF_WISHLIST_CHANGED)
+    }
+
+    onWishlistChanged(newWishList) {
+        this.setState({wishList: newWishList})
     }
 
     createWishList = () => {
@@ -48,4 +48,4 @@ class Wishlist extends Component {
         )}
 }
 
-export default Wishlist
+export default WishList
