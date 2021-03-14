@@ -20,7 +20,6 @@ class NotificationService {
         }
     }
 
-
     removeObserver = (observer, notifName) => {
         let obs = observers[notifName]
 
@@ -34,7 +33,6 @@ class NotificationService {
             }
         }
     }
-
 
     addObserver = (notifName, observer, callBack) => {
         let obs = observers[notifName]
